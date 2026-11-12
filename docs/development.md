@@ -12,6 +12,10 @@
 - `src/lib/bowMaterial.ts` — восстановление native-флагов материала лука.
 - `src/lib/publicAsset.ts` — пути ресурсов с учётом `import.meta.env.BASE_URL`; новые файлы из `public/` загружать через этот helper.
 
+## Публикация
+
+Workflow `.github/workflows/pages.yml` публикует `dist/` при пуше в `main` или ручном запуске через Actions. В настройках репозитория необходимо заранее выбрать **Pages → Source → GitHub Actions**, иначе `Configure Pages` завершается с 404 ещё до сборки. Базовый путь берётся из метаданных Pages; локальная разработка остаётся на `/`. Отдельная ветка `gh-pages` и пользовательские секреты не нужны.
+
 ## Не потерять при изменениях рендера
 
 1. Raw GLB содержит `alphaMode=BLEND`. После загрузки `bowMaterial.ts` восстанавливает сочетание alpha blending, `depthWrite=true`, `depthTest=true`, `alphaTest=160/255`, `DoubleSide`, `forceSinglePass=true`. Без этого детали лука просвечивают при поворотах. Не заменять комбинацию просто на `transparent=false`.

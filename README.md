@@ -19,28 +19,6 @@ npm run dev
 
 Адрес: http://127.0.0.1:5183. `npm ci` выполнять до запуска сервера. Dev-сервером управляет пользователь; агент не перезапускает его и не очищает кеш.
 
-## GitHub Pages
-
-Адрес после публикации: **https://l2ce.github.io/draconic-bow/**.
-
-1. В репозитории GitHub открыть **Settings → Pages → Build and deployment → Source → GitHub Actions**.
-2. Разрешить запуск GitHub Actions и, если потребуется, подтвердить окружение `github-pages`.
-3. Отправить ветку `main`. Workflow [pages.yml](./.github/workflows/pages.yml) установит зависимости по lockfile, соберёт сайт и опубликует только `dist/`. Повторная публикация — при пуше в `main` или вручную через Actions.
-
-Для первого коммита и пуша:
-
-```bash
-git add .
-git commit -m "Initial commit"
-git push -u origin main
-```
-
-Workflow получает базовый путь сайта из GitHub Pages. Загрузка модели, эффектов, текстур и ссылки учитывают этот путь; локально приложение остаётся на `/`. Секреты и отдельная ветка `gh-pages` не нужны. Для самостоятельной сборки под текущий адрес:
-
-```bash
-npm run build -- --base=/draconic-bow/
-```
-
 ## Разработка и ресурсы
 
 - [docs/development.md](./docs/development.md) — устройство кода, важные настройки рендера и dev-диагностика.
