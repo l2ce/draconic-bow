@@ -1,0 +1,614 @@
+{
+  "version": 1,
+  "itemId": 7575,
+  "meshName": "bow",
+  "maxLevel": 16,
+  "meshStart": 4,
+  "particlesStart": 7,
+  "levels": [
+    {
+      "level": 0,
+      "color1": [
+        0,
+        10,
+        20
+      ],
+      "color2": [
+        0,
+        0,
+        30
+      ],
+      "opacity": 0.1,
+      "density": 0.1
+    },
+    {
+      "level": 1,
+      "color1": [
+        0,
+        10,
+        20
+      ],
+      "color2": [
+        0,
+        0,
+        30
+      ],
+      "opacity": 0.1,
+      "density": 0.1
+    },
+    {
+      "level": 2,
+      "color1": [
+        0,
+        10,
+        20
+      ],
+      "color2": [
+        0,
+        0,
+        30
+      ],
+      "opacity": 0.1,
+      "density": 0.1
+    },
+    {
+      "level": 3,
+      "color1": [
+        0,
+        10,
+        20
+      ],
+      "color2": [
+        0,
+        0,
+        30
+      ],
+      "opacity": 0.1,
+      "density": 0.1
+    },
+    {
+      "level": 4,
+      "color1": [
+        30,
+        30,
+        40
+      ],
+      "color2": [
+        20,
+        20,
+        30
+      ],
+      "opacity": 1.0,
+      "density": 0.1
+    },
+    {
+      "level": 5,
+      "color1": [
+        35,
+        45,
+        60
+      ],
+      "color2": [
+        25,
+        35,
+        50
+      ],
+      "opacity": 1.0,
+      "density": 0.1
+    },
+    {
+      "level": 6,
+      "color1": [
+        35,
+        65,
+        90
+      ],
+      "color2": [
+        25,
+        55,
+        75
+      ],
+      "opacity": 1.0,
+      "density": 0.1
+    },
+    {
+      "level": 7,
+      "color1": [
+        40,
+        87,
+        126
+      ],
+      "color2": [
+        30,
+        70,
+        110
+      ],
+      "opacity": 1.0,
+      "density": 0.3
+    },
+    {
+      "level": 8,
+      "color1": [
+        30,
+        80,
+        135
+      ],
+      "color2": [
+        20,
+        60,
+        120
+      ],
+      "opacity": 1.0,
+      "density": 0.6
+    },
+    {
+      "level": 9,
+      "color1": [
+        20,
+        70,
+        145
+      ],
+      "color2": [
+        10,
+        50,
+        130
+      ],
+      "opacity": 1.0,
+      "density": 0.7
+    },
+    {
+      "level": 10,
+      "color1": [
+        10,
+        60,
+        160
+      ],
+      "color2": [
+        0,
+        45,
+        140
+      ],
+      "opacity": 1.0,
+      "density": 0.8
+    },
+    {
+      "level": 11,
+      "color1": [
+        0,
+        50,
+        180
+      ],
+      "color2": [
+        0,
+        44,
+        155
+      ],
+      "opacity": 1.0,
+      "density": 0.9
+    },
+    {
+      "level": 12,
+      "color1": [
+        0,
+        40,
+        200
+      ],
+      "color2": [
+        0,
+        43,
+        170
+      ],
+      "opacity": 1.0,
+      "density": 1.0
+    },
+    {
+      "level": 13,
+      "color1": [
+        0,
+        30,
+        220
+      ],
+      "color2": [
+        0,
+        42,
+        185
+      ],
+      "opacity": 1.0,
+      "density": 1.0
+    },
+    {
+      "level": 14,
+      "color1": [
+        0,
+        30,
+        240
+      ],
+      "color2": [
+        0,
+        41,
+        200
+      ],
+      "opacity": 1.0,
+      "density": 1.0
+    },
+    {
+      "level": 15,
+      "color1": [
+        0,
+        30,
+        255
+      ],
+      "color2": [
+        0,
+        40,
+        215
+      ],
+      "opacity": 1.0,
+      "density": 1.0
+    },
+    {
+      "level": 16,
+      "color1": [
+        160,
+        20,
+        20
+      ],
+      "color2": [
+        130,
+        10,
+        0
+      ],
+      "opacity": 1.0,
+      "density": 1.0
+    }
+  ],
+  "surface": {
+    "source": "LineageEffectsTextures.Etc.Enchant_Aura001_Shader01",
+    "faces": [
+      "/effects/aura001_0.png",
+      "/effects/aura001_1.png",
+      "/effects/aura001_2.png",
+      "/effects/aura001_2.png",
+      "/effects/aura001_2.png",
+      "/effects/aura001_5.png"
+    ],
+    "fadePeriod": 1.0,
+    "fadePhase": 0,
+    "rotation": [
+      -1.5707963267948966,
+      0.0,
+      0.0
+    ]
+  },
+  "attachment": {
+    "sourceFields": {
+      "junk1A1": 0.0,
+      "junk1A2": -3.0,
+      "junk1A3": 0.0,
+      "junk1A4": 1.2000000476837158,
+      "junk1A5": 1.2000000476837158
+    },
+    "offset": [
+      0.0,
+      -3.0,
+      0.0
+    ],
+    "scale": 1.2000000476837158
+  },
+  "range": {
+    "source": "LineageWeapons.rangesample",
+    "geometry": "/effects/rangesample.json",
+    "scale": [
+      1.600000023841858,
+      1.2999999523162842,
+      1.2999999523162842
+    ],
+    "offset": [
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "emitters": [
+    {
+      "name": "SpriteEmitter55",
+      "source": "LineageEffect.c_u008.SpriteEmitter55",
+      "texture": "/effects/fx_m_t0144.png",
+      "maxParticles": 8,
+      "rate": 4.0,
+      "lifetime": [
+        2.0,
+        2.0
+      ],
+      "opacity": 0.5,
+      "offset": [
+        3.0,
+        0.0,
+        0.0
+      ],
+      "locationRange": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          -0.5,
+          0.5
+        ],
+        [
+          -1.5,
+          1.5
+        ]
+      ],
+      "velocityRange": [
+        [
+          5.0,
+          8.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "velocityLossRange": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "acceleration": [
+        4.0,
+        -1.2000000476837158,
+        0.0
+      ],
+      "sizeRange": [
+        [
+          2.0,
+          3.0
+        ],
+        [
+          4.0,
+          6.0
+        ],
+        [
+          1.0,
+          1.340000033378601
+        ]
+      ],
+      "sizeScale": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "startSpin": [
+        0.0,
+        1.0
+      ],
+      "spinRate": [
+        -0.10000000149011612,
+        0.10000000149011612
+      ],
+      "colorMultiplier": [
+        [
+          0.5,
+          0.699999988079071
+        ],
+        [
+          0.4000000059604645,
+          0.6000000238418579
+        ],
+        [
+          0.699999988079071,
+          0.8999999761581421
+        ]
+      ],
+      "useColorScale": false,
+      "colorScale": [
+        [
+          0.0,
+          [
+            185,
+            189,
+            21
+          ]
+        ],
+        [
+          0.12857100367546082,
+          [
+            255,
+            255,
+            255
+          ]
+        ],
+        [
+          1.0,
+          [
+            77,
+            139,
+            255
+          ]
+        ]
+      ],
+      "fadeIn": 0.4000000059604645,
+      "fadeOut": 0.800000011920929,
+      "subdivisions": [
+        4,
+        1
+      ],
+      "lastFrame": 3,
+      "randomFrame": true,
+      "direction": 1
+    },
+    {
+      "name": "SpriteEmitter56",
+      "source": "LineageEffect.c_u008.SpriteEmitter56",
+      "texture": "/effects/fx_m_t0144.png",
+      "maxParticles": 8,
+      "rate": 4.0,
+      "lifetime": [
+        2.0,
+        2.0
+      ],
+      "opacity": 0.5,
+      "offset": [
+        -3.0,
+        0.0,
+        0.0
+      ],
+      "locationRange": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          -0.5,
+          0.5
+        ],
+        [
+          -1.5,
+          1.5
+        ]
+      ],
+      "velocityRange": [
+        [
+          -8.0,
+          -5.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "velocityLossRange": [
+        [
+          1.0,
+          1.0
+        ],
+        [
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0
+        ]
+      ],
+      "acceleration": [
+        -5.0,
+        -1.2000000476837158,
+        0.0
+      ],
+      "sizeRange": [
+        [
+          2.0,
+          3.0
+        ],
+        [
+          4.0,
+          6.0
+        ],
+        [
+          1.0,
+          1.340000033378601
+        ]
+      ],
+      "sizeScale": [
+        [
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          1.5
+        ]
+      ],
+      "startSpin": [
+        0.0,
+        1.0
+      ],
+      "spinRate": [
+        -0.10000000149011612,
+        0.10000000149011612
+      ],
+      "colorMultiplier": [
+        [
+          0.5,
+          0.699999988079071
+        ],
+        [
+          0.4000000059604645,
+          0.6000000238418579
+        ],
+        [
+          0.699999988079071,
+          0.8999999761581421
+        ]
+      ],
+      "useColorScale": false,
+      "colorScale": [
+        [
+          0.0,
+          [
+            185,
+            189,
+            21
+          ]
+        ],
+        [
+          0.12857100367546082,
+          [
+            255,
+            255,
+            255
+          ]
+        ],
+        [
+          1.0,
+          [
+            77,
+            139,
+            255
+          ]
+        ]
+      ],
+      "fadeIn": 0.4000000059604645,
+      "fadeOut": 0.800000011920929,
+      "subdivisions": [
+        4,
+        1
+      ],
+      "lastFrame": 3,
+      "randomFrame": true,
+      "direction": 1
+    }
+  ],
+  "provenance": {
+    "env": "system/Env.int",
+    "envSha256": "638b09916ef401fe9b5eae0e8f6972768bf36b2e63d9fa608bbe15864608d70f",
+    "material": "LineageEffectsTextures.Etc.Enchant_Aura001_Shader01",
+    "effect": "LineageEffect.c_u008",
+    "emitterDefaults": "Engine.ParticleEmitter",
+    "notes": "Client colors/thresholds/textures/emitter parameters; native UE2 rendering is reproduced in WebGL, not executed."
+  }
+}

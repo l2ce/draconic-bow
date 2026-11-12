@@ -1,0 +1,29 @@
+node_modules/
+dist/
+coverage/
+.vite/
+*.local
+*.tsbuildinfo
+.DS_Store
+
+# Python and local tooling
+__pycache__/
+*.py[cod]
+*.log
+
+# Local configuration and credentials
+.env
+.env.*
+!.env.example
+
+# Generated reports and raw game/Blender resources are not repository content
+/reports/
+/asset-work/
+/client-high-five/
+*.blend
+*.blend[0-9]*
+*.psk
+*.pskx
+*.psa
+*.tga
+*.zip
