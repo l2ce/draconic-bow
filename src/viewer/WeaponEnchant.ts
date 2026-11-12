@@ -10,6 +10,11 @@ import type { EnchantConfig, EnchantEmitter, EnchantLevel, NumberRange, Vec3Tupl
 import { getEnchantStudyMode } from '../lib/enchantStudy'
 import { publicAssetUrl } from '../lib/publicAsset'
 
+// Web exposure calibration against game references, not recovered UE2 parameters.
+// The client still supplies every level's palette, opacity and particle density.
+const AURA_GAIN = 2.4
+const WEAPON_SHIMMER_GAIN = 0.6
+
 // Unreal translucency is a screen blend, not an opaque recolor of the weapon.
 const translucent = {
   transparent: true,
@@ -164,10 +169,11 @@ const detailEmissionFragment = /* glsl */ `
     float influence = 1.0 - smoothstep(0.4, 0.95, radius);
     if (influence < 0.001) discard;
     vec3 reflected = reflect(-normalize(vViewDirection), normalize(vViewNormal));
-    vec3 sourceDirection = vec3(reflected.x, reflected.z, reflected.y);
-    float shimmer = textureCube(uAura, uRotation * sourceDirection).r;
-    // The original albedo carries the details: black recesses do not get a flat veil.
+    // Use the same camera-space reflection as the surrounding Rangesample aura.
+    float shimmer = textureCube(uAura, uRotation * reflected).r;
+    // Follow the original texture's highlights; leave dark recesses unlit.
     float detail = max(max(original.r, original.g), original.b);
+    detail *= smoothstep(0.05, 0.65, detail);
     vec3 color = uTint * shimmer * detail * influence * uOpacity * uGain * original.a;
     gl_FragColor = vec4(color, 1.0);
     #include <colorspace_fragment>
@@ -483,27 +489,30 @@ export class WeaponEnchant {
     const sphere = resources.rangeGeometry.boundingSphere!
     const rangeCenter = sphere.center.clone().multiply(rangeScale).add(rangeOffset)
     const rangeRadii = rangeScale.clone().multiplyScalar(sphere.radius)
+    const normalComposition = this.studyMode === null || this.studyMode === 'full'
+    const detailSurface = normalComposition || this.studyMode === 'volume-full'
     const surfaceMaterial = new ShaderMaterial({
       ...translucent, side: DoubleSide,
+      forceSinglePass: true,
       uniforms: {
         uAura: { value: resources.cube }, uMask: { value: material.map }, uHasMask: { value: Boolean(material.map) },
         uAlphaCutoff: { value: material.alphaTest || 0.04 },
-        uRotation: { value: rotation }, uTint: { value: this.studyMode === 'volume-full' ? this.auraTint : this.tint }, uOpacity: { value: 0 },
-        uGain: { value: 1 }, uExtrude: { value: extent * 0.0006 },
+        uRotation: { value: rotation }, uTint: { value: detailSurface ? this.auraTint : this.tint }, uOpacity: { value: 0 },
+        uGain: { value: normalComposition ? WEAPON_SHIMMER_GAIN : 1 }, uExtrude: { value: extent * 0.0006 },
         uRangeCenter: { value: rangeCenter }, uRangeRadii: { value: rangeRadii },
       },
-      vertexShader: surfaceVertex, fragmentShader: this.studyMode === 'volume-full' ? detailEmissionFragment : surfaceFragment,
+      vertexShader: surfaceVertex, fragmentShader: detailSurface ? detailEmissionFragment : surfaceFragment,
     })
     this.surface = new Mesh(weapon.geometry, surfaceMaterial)
-    this.surface.name = 'enchant-surface'
+    this.surface.name = detailSurface ? 'enchant-weapon-shimmer' : 'enchant-surface'
     this.surface.renderOrder = 3
     this.surface.userData.viewerEffect = true
     if (this.studyMode === 'volume-full') {
       // Web reconstruction exposure for detail-driven emission, not a palette edit.
       surfaceMaterial.uniforms.uGain!.value = 2
     }
-    // Keep the old extra recolor layer for dev-only A/B inspection, not normal rendering.
-    this.surface.visible = this.studyMode === 'surface' || this.studyMode === 'before' || this.studyMode === 'volume-full'
+    // Normal rendering uses texture-driven shimmer, not the legacy flat recolor.
+    this.surface.visible = detailSurface || this.studyMode === 'surface' || this.studyMode === 'before'
 
     const maskMaterial = new ShaderMaterial({
       transparent: true, toneMapped: false, blending: NoBlending,
@@ -523,14 +532,14 @@ export class WeaponEnchant {
       ...translucent,
       side: this.volumeStudy ? DoubleSide : FrontSide,
       forceSinglePass: true,
-      // Read the weapon stencil but never modify it. No veil on the original texture.
+      // Keep the broad aura off the weapon; its detail-driven shimmer is a separate pass.
       stencilWrite: this.studyMode !== 'before', stencilRef: 1, stencilWriteMask: 0, stencilFuncMask: 1,
       stencilFunc: NotEqualStencilFunc, stencilFail: KeepStencilOp,
       stencilZFail: KeepStencilOp, stencilZPass: KeepStencilOp,
       uniforms: {
         uAura: { value: resources.cube }, uMask: { value: null }, uHasMask: { value: false },
         uRotation: { value: rotation }, uTint: { value: this.studyMode === 'before' ? this.tint : this.auraTint }, uOpacity: { value: 0 },
-        uGain: { value: 1 }, uExtrude: { value: 0 },
+        uGain: { value: normalComposition || this.studyMode === 'aura' ? AURA_GAIN : 1 }, uExtrude: { value: 0 },
         uLegacyComposite: { value: this.studyMode === 'before' },
         uCameraLocal: { value: this.rangeCamera }, uSphereCenter: { value: sphere.center }, uSphereRadius: { value: sphere.radius },
       },
@@ -566,8 +575,9 @@ export class WeaponEnchant {
     for (const material of this.materials) material.uniforms.uOpacity!.value = level.opacity
     if (!this.particlesGroup.visible) {
       for (const emitter of this.emitters) emitter.reset()
-    } else if (!hadParticles) {
-      // The source emitter has a warmup: first activation is not an empty frame.
+    } else if (!hadParticles || this.studyMode || this.reducedMotion) {
+      // Warm up first activation and rebuild frozen previews for the selected level.
+      for (const emitter of this.emitters) emitter.reset()
       for (let step = 0; step < 120; step += 1) for (const emitter of this.emitters) emitter.advance(1 / 30, level.density)
     }
   }

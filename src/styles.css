@@ -67,6 +67,18 @@ a { color: inherit; text-decoration: none; }
 .enchant-button.is-maximum { border-color: #b4bac469; }
 .enchant-study-banner { position: absolute; top: 90px; left: 50%; transform: translateX(-50%); max-width: calc(100% - 40px); padding: 9px 12px; border: 1px solid var(--border-strong); border-radius: 5px; background: var(--panel); color: var(--text); font-size: 10px; line-height: 1.6; text-align: center; }
 .enchant-study-banner a { color: var(--accent); text-decoration: underline; margin-left: 8px; }
+.enchant-debug-dialog { width: min(380px, calc(100% - 40px)); max-height: calc(100dvh - 40px); margin: auto; padding: 26px; overflow: auto; border: 1px solid var(--border-strong); border-radius: 10px; background: #27292ef7; color: var(--text); box-shadow: var(--panel-shadow); }
+.enchant-debug-dialog::backdrop { background: #101115a6; }
+.enchant-debug-dialog h2 { margin: 0 0 12px; font: 24px Georgia, serif; }
+.enchant-debug-dialog p { margin: 0 0 20px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.enchant-debug-dialog label { display: block; margin-bottom: 9px; font-size: 12px; }
+.enchant-debug-dialog input { display: block; width: 100%; height: 44px; padding: 10px 12px; border: 1px solid var(--border-strong); border-radius: 6px; background: #202125; color: var(--text); font: inherit; font-variant-numeric: tabular-nums; }
+.enchant-debug-dialog input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.enchant-debug-dialog .enchant-debug-hint { margin: 9px 0 20px; font-size: 10px; }
+.enchant-debug-actions { display: flex; justify-content: flex-end; gap: 10px; }
+.enchant-debug-actions button { min-height: 38px; padding: 9px 14px; border: 1px solid var(--border-strong); border-radius: 6px; background: transparent; font-size: 12px; }
+.enchant-debug-actions .enchant-debug-apply { background: #3a3e46; }
+.enchant-debug-actions button:not(:disabled):hover { border-color: var(--accent); background: var(--selected); }
 .motion-diagnostics { position: absolute; z-index: 10; top: 180px; right: 30px; width: min(340px, calc(100% - 40px)); padding: 13px; border: 1px solid var(--border-strong); border-radius: 6px; background: var(--panel); color: var(--text); pointer-events: none; }
 .motion-diagnostics strong { color: var(--accent); font-size: 11px; font-weight: 500; }
 .motion-diagnostics pre { margin: 9px 0 0; font: 10px/1.8 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }

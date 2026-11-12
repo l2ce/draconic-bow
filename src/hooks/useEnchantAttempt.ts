@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { MAX_ENCHANT } from '../lib/enchant'
+import { clampEnchant, MAX_ENCHANT } from '../lib/enchant'
 import { ENCHANT_ATTEMPT_DURATION_MS, resolveEnchantAttempt } from '../lib/enchantAttempt'
 import type { EnchantAttemptResult } from '../lib/enchantAttempt'
 
@@ -67,16 +67,25 @@ export function useEnchantAttempt({ level, ready, onLevelChange }: Options) {
 
   function reset() {
     if (!ready || feedback || attempt || activeAttempt.current) return
+    overrideLevel(0)
+  }
+
+  function overrideLevel(value: number) {
+    if (!ready) return
+    // Invalidate the timer synchronously, even when the debug level stays the same.
+    activeAttempt.current = null
+    setAttempt(null)
+    setFeedback(false)
     setResult(null)
     setProgress(0)
-    onLevelChange(0)
+    onLevelChange(clampEnchant(value))
   }
 
   return {
     attempt, progress, result: result?.level === level ? result : null, feedback,
     busy: attempt !== null,
     blocked: attempt !== null || feedback,
-    start, reset,
+    start, reset, overrideLevel,
   }
 }
 
