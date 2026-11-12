@@ -16,13 +16,12 @@ interface Props {
   ref: Ref<ViewerHandle>
   file: File | null
   options: ViewerOptions
-  onReady: () => void
   onLoaded: (info: ModelInfo) => void
   onError: (message: string) => void
   onEnchantState: (state: EnchantState) => void
 }
 
-export function ModelViewer({ ref, file, options, onReady, onLoaded, onError, onEnchantState }: Props) {
+export function ModelViewer({ ref, file, options, onLoaded, onError, onEnchantState }: Props) {
   const container = useRef<HTMLDivElement>(null)
   const engine = useRef<ViewerEngine | null>(null)
   const initialOptions = useRef(options)
@@ -38,7 +37,6 @@ export function ModelViewer({ ref, file, options, onReady, onLoaded, onError, on
     if (!container.current) return
     try {
       engine.current = new ViewerEngine(container.current, initialOptions.current, onError, onEnchantState)
-      onReady()
     } catch (error) {
       console.error('Не удалось создать 3D-сцену:', error)
       onError('3D-сцена недоступна. Нужен браузер с WebGL 2 и включённым аппаратным ускорением.')
@@ -47,7 +45,7 @@ export function ModelViewer({ ref, file, options, onReady, onLoaded, onError, on
       engine.current?.dispose()
       engine.current = null
     }
-  }, [onReady, onError, onEnchantState])
+  }, [onError, onEnchantState])
 
   useEffect(() => {
     engine.current?.setOptions(options)

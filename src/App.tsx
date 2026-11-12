@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Icon } from './components/Icon'
 import { ModelViewer } from './components/ModelViewer'
-import { EnchantPanel } from './components/EnchantPanel'
+import { EnchantControls } from './components/EnchantControls'
 import type { ViewerHandle } from './components/ModelViewer'
 import { formatNumber } from './lib/models'
 import type { ModelInfo } from './lib/models'
@@ -24,7 +24,6 @@ export default function App() {
   const fullscreen = useRef<HTMLElement>(null)
   const [file, setFile] = useState<File | null>(null)
   const [info, setInfo] = useState<ModelInfo | null>(null)
-  const [webglReady, setWebglReady] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
   const [settingsOpen, setSettingsOpen] = useState(false)
@@ -60,7 +59,6 @@ export default function App() {
     return () => controller.abort()
   }, [])
 
-  const onReady = useCallback(() => setWebglReady(true), [])
   const onLoaded = useCallback((model: ModelInfo) => {
     setInfo(model)
     setError(null)
@@ -92,7 +90,7 @@ export default function App() {
   return (
     <main className="atelier" ref={fullscreen}>
       <div className="scene-background" aria-hidden="true" />
-      <ModelViewer ref={viewer} file={file} options={options} onReady={onReady} onLoaded={onLoaded} onError={onError} onEnchantState={onEnchantState} />
+      <ModelViewer ref={viewer} file={file} options={options} onLoaded={onLoaded} onError={onError} onEnchantState={onEnchantState} />
       <div className="scene-vignette" aria-hidden="true" />
 
       <header className="topbar">
@@ -100,15 +98,29 @@ export default function App() {
           <span className="brand-mark"><Icon name="bow" size={29} /></span>
           <span><span className="brand-title">DRACONIC BOW</span><span className="brand-subtitle">LINEAGE II · HIGH FIVE</span></span>
         </a>
-        <div className="topbar-right">
-          <span className="scene-edition">CHARACTER STUDY <span>№ 001</span></span>
-          <span className={`renderer-state ${webglReady ? 'is-ready' : ''}`}><span className="status-dot" />{webglReady ? 'WebGL 2' : 'Запуск сцены'}</span>
+        <div className="scene-settings">
+          <button className={`settings-trigger ${settingsOpen ? 'is-active' : ''}`} onClick={() => setSettingsOpen(!settingsOpen)} aria-expanded={settingsOpen} aria-controls="display-settings">
+            <Icon name="layers" size={17} /> Отображение <span>{settingsOpen ? '−' : '+'}</span>
+          </button>
+          {settingsOpen && (
+            <div className="settings-panel" id="display-settings">
+              {([
+                ['autoRotate', 'Автовращение'],
+                ['showGrid', 'Сетка сцены'],
+                ['wireframe', 'Каркас модели'],
+              ] as const).map(([key, label]) => (
+                <button className="setting-row" key={key} role="switch" aria-checked={options[key]} onClick={() => toggle(key)}>
+                  {label}<span className={`switch ${options[key] ? 'is-on' : ''}`}><span /></span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       </header>
 
       {studyMode && <div className="enchant-study-banner" role="status">Диагностика: {ENCHANT_STUDY_LABELS[studyMode]} · статичный кадр <a href={import.meta.env.BASE_URL}>Обычный просмотр</a></div>}
 
-      <EnchantPanel state={enchant} level={options.enchantLevel} modelReady={Boolean(info) && !error} onLevelChange={setEnchantLevel} onRetry={retryEnchant} />
+      <EnchantControls state={enchant} level={options.enchantLevel} modelReady={Boolean(info) && !error} onLevelChange={setEnchantLevel} onRetry={retryEnchant} />
 
       {(!info || error) && (
         <div className="scene-message" role={error ? 'alert' : 'status'} aria-live="polite">
@@ -126,25 +138,6 @@ export default function App() {
         <button className="tool-button" onClick={() => viewer.current?.resetView()} aria-label="Сбросить камеру" title="Сбросить камеру"><Icon name="reset" /></button>
         <button className="tool-button" onClick={toggleFullscreen} aria-label="На весь экран" title="На весь экран"><Icon name="expand" /></button>
       </nav>
-
-      <div className="scene-settings">
-        <button className={`settings-trigger ${settingsOpen ? 'is-active' : ''}`} onClick={() => setSettingsOpen(!settingsOpen)} aria-expanded={settingsOpen} aria-controls="display-settings">
-          <Icon name="layers" size={17} /> Отображение <span>{settingsOpen ? '−' : '+'}</span>
-        </button>
-        {settingsOpen && (
-          <div className="settings-panel" id="display-settings">
-            {([
-              ['autoRotate', 'Автовращение'],
-              ['showGrid', 'Сетка сцены'],
-              ['wireframe', 'Каркас модели'],
-            ] as const).map(([key, label]) => (
-              <button className="setting-row" key={key} role="switch" aria-checked={options[key]} onClick={() => toggle(key)}>
-                {label}<span className={`switch ${options[key] ? 'is-on' : ''}`}><span /></span>
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
 
       <footer className="scene-footer">
         <div className="camera-hints"><Icon name="mouse" size={18} /><span>Тяните, чтобы вращать<br /><span>Колесо — приближение</span></span></div>

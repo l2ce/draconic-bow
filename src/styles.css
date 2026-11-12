@@ -30,68 +30,56 @@ button { color: inherit; }
 button, a { touch-action: manipulation; }
 button { transition: background .18s, color .18s, border-color .18s; }
 a { color: inherit; text-decoration: none; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 
 .atelier { position: relative; width: 100%; height: 100dvh; min-height: 600px; overflow: hidden; isolation: isolate; }
 .scene-background { position: absolute; inset: 0; background: radial-gradient(ellipse at 52% 34%, #3c3e43 0%, #313338 27%, #27292e 55%, #202125 83%); z-index: -2; }
 .three-canvas { position: absolute; inset: 0; }
 .three-canvas canvas { display: block; width: 100%; height: 100%; touch-action: none; }
 .scene-vignette { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(0deg, #17181cd9 0%, transparent 23%, transparent 80%, #17181c66 100%); }
-.topbar { position: absolute; top: 0; left: 0; right: 0; padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+.topbar { position: absolute; z-index: 2; top: 0; left: 0; right: 0; padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; gap: 20px; pointer-events: none; }
 .brand { display: flex; align-items: center; gap: 13px; pointer-events: auto; }
 .brand-mark { color: var(--accent); width: 47px; height: 47px; display: grid; place-items: center; border: 1px solid var(--border-strong); border-radius: 50%; background: var(--panel-soft); }
 .brand-title { display: block; font: 17px Georgia, 'Times New Roman', serif; letter-spacing: 2.8px; }
 .brand-subtitle { display: block; margin-top: 8px; font-size: 8px; letter-spacing: 3.1px; color: var(--muted); }
-.topbar-right { display: flex; gap: 34px; align-items: center; }
-.scene-edition { font-size: 9px; letter-spacing: 2px; color: var(--muted); }
-.scene-edition span { display: inline-block; padding-left: 15px; margin-left: 15px; border-left: 1px solid var(--border); color: var(--accent); }
-.renderer-state { display: flex; align-items: center; gap: 8px; font-size: 10px; color: var(--muted); }
-.status-dot { height: 5px; width: 5px; border-radius: 50%; background: var(--subtle); }
-.is-ready .status-dot { background: var(--accent); box-shadow: 0 0 12px #b4bac433; }
 
-.enchant-panel { position: absolute; left: 48px; top: 31%; width: 280px; padding: 18px; background: var(--panel); border: 1px solid var(--border); border-radius: 9px; backdrop-filter: blur(16px); box-shadow: var(--panel-shadow); }
-.enchant-summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.enchant-heading > span { font-size: 8px; letter-spacing: 1.6px; color: var(--muted); }
-.enchant-heading h1 { margin: 8px 0 0; font: 22px/1.2 Georgia, 'Times New Roman', serif; }
-.enchant-counter { color: color-mix(in srgb, var(--enchant-color), var(--text) 42%); font: 33px/1 Georgia, serif; min-width: 55px; text-align: right; font-variant-numeric: tabular-nums; }
-.enchant-hint { color: var(--muted); font-size: 10px; line-height: 1.65; min-height: 33px; margin: 13px 0 12px; }
-.enchant-chance { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 10px; }
-.enchant-chance strong { color: var(--text); font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.enchant-operation { margin: 13px 0 17px; }
-.enchant-operation-status { display: flex; justify-content: space-between; gap: 8px; min-height: 34px; margin-bottom: 8px; color: var(--muted); font-size: 10px; line-height: 1.7; }
-.enchant-percentage { color: var(--text); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.enchant-progress { height: 6px; overflow: hidden; background: var(--border); border-radius: 3px; }
-.enchant-progress > span { display: block; height: 100%; background: var(--accent); border-radius: inherit; transition: width .06s linear, background .18s; }
-.enchant-panel.is-success .enchant-operation-status { color: #b2c8ac; }
-.enchant-panel.is-success .enchant-progress > span { background: #9bb893; }
-.enchant-panel.is-failure .enchant-operation-status { color: #d2a78e; }
-.enchant-panel.is-failure .enchant-progress > span { background: #c59679; }
-.enchant-panel.is-enchanting .enchant-increase { opacity: .7; cursor: wait; }
-.enchant-actions { display: flex; gap: 8px; }
-.enchant-increase, .enchant-reset { display: inline-flex; align-items: center; justify-content: center; gap: 7px; height: 37px; border-radius: 4px; font-size: 11px; }
-.enchant-increase { flex: 1; padding: 0 10px; background: var(--accent); color: #25282e; border: 1px solid var(--accent); white-space: nowrap; }
-.enchant-increase:hover:not(:disabled) { background: #c4cad3; border-color: #c4cad3; }
-.enchant-increase:disabled { opacity: .45; }
-.enchant-reset { width: 37px; flex-shrink: 0; padding: 0; background: transparent; color: var(--muted); border: 1px solid var(--border-strong); }
-.enchant-reset:hover:not(:disabled) { background: var(--hover); color: var(--text); }
-.enchant-reset > span { display: none; }
-.enchant-source { margin: 13px 0 0; text-align: center; font-size: 6px; letter-spacing: 1.3px; color: var(--subtle); }
-.enchant-panel.has-error { border-color: #bd896a55; }
-.enchant-panel.has-error .enchant-hint { color: #d2a78e; }
+.enchant-controls, .camera-tools { top: 50%; transform: translateY(-50%); }
+.enchant-controls { position: absolute; left: 40px; width: 280px; }
+.enchant-button-wrap { position: relative; }
+.enchant-button { position: relative; display: grid; grid-template-columns: 32px minmax(0, 1fr) 32px; align-items: center; gap: 12px; width: 100%; height: 64px; overflow: hidden; padding: 9px 15px; border: 1px solid var(--border-strong); border-radius: 9px; background: linear-gradient(135deg, #3a3e46, #2a2d33); box-shadow: var(--panel-shadow); color: var(--text); text-align: center; }
+.enchant-button:disabled { opacity: 1; }
+.enchant-button:not(:disabled):hover { border-color: var(--accent); box-shadow: 0 6px 24px #0003, 0 0 0 1px #b4bac41a; }
+.enchant-button-fill { position: absolute; z-index: 0; top: 0; bottom: 0; left: 0; width: var(--attempt-progress); background: linear-gradient(90deg, #b4bac425, #b4bac449); pointer-events: none; }
+.enchant-button-icon { position: relative; z-index: 1; display: grid; place-items: center; flex-shrink: 0; width: 32px; height: 32px; color: var(--accent); }
+.enchant-button-copy { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 0; }
+.enchant-button-title { font-size: 13px; font-weight: 500; line-height: 1.45; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.enchant-button-subtitle { color: var(--muted); font-size: 10px; line-height: 1.6; overflow-wrap: anywhere; }
+.enchant-button-spinner { width: 19px; height: 19px; border: 2px solid var(--border-strong); border-top-color: var(--accent); border-radius: 50%; animation: spin .9s linear infinite; }
+.enchant-button.is-loading { opacity: .6; }
+.enchant-button.is-enchanting { cursor: wait; }
+.enchant-button.is-enchanting .enchant-button-fill { transition: width .06s linear; }
+.enchant-button.is-success { border-color: #8ba681; }
+.enchant-button.is-success .enchant-button-fill { background: #81a67626; }
+.enchant-button.is-success .enchant-button-title, .enchant-button.is-success .enchant-button-icon { color: #c0dab7; }
+.enchant-button.is-failure, .enchant-button.has-error { border-color: #aa7962; }
+.enchant-button.is-failure .enchant-button-fill { background: #bc80652b; }
+.enchant-button.is-failure .enchant-button-title, .enchant-button.is-failure .enchant-button-icon, .enchant-button.has-error .enchant-button-icon { color: #e2b49e; }
+.enchant-button.is-maximum { border-color: #b4bac469; }
 .enchant-study-banner { position: absolute; top: 90px; left: 50%; transform: translateX(-50%); max-width: calc(100% - 40px); padding: 9px 12px; border: 1px solid var(--border-strong); border-radius: 5px; background: var(--panel); color: var(--text); font-size: 10px; line-height: 1.6; text-align: center; }
 .enchant-study-banner a { color: var(--accent); text-decoration: underline; margin-left: 8px; }
 .motion-diagnostics { position: absolute; z-index: 10; top: 180px; right: 30px; width: min(340px, calc(100% - 40px)); padding: 13px; border: 1px solid var(--border-strong); border-radius: 6px; background: var(--panel); color: var(--text); pointer-events: none; }
 .motion-diagnostics strong { color: var(--accent); font-size: 11px; font-weight: 500; }
 .motion-diagnostics pre { margin: 9px 0 0; font: 10px/1.8 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
 
-.camera-tools { position: absolute; top: 41%; right: 34px; display: flex; flex-direction: column; padding: 6px; border: 1px solid var(--border); border-radius: 9px; background: var(--panel-soft); backdrop-filter: blur(16px); }
+.camera-tools { position: absolute; right: 34px; display: none; flex-direction: column; padding: 6px; border: 1px solid var(--border); border-radius: 9px; background: var(--panel-soft); backdrop-filter: blur(16px); }
 .tool-button { border: 0; background: transparent; width: 39px; height: 42px; display: grid; place-items: center; border-radius: 4px; color: var(--muted); }
 .tool-button:hover { color: var(--text); background: var(--hover); }
 .tools-divider { height: 1px; margin: 5px 8px; background: var(--border); }
-.scene-settings { position: absolute; top: 119px; right: 40px; width: 205px; }
+.scene-settings { position: relative; flex-shrink: 0; pointer-events: auto; }
 .settings-trigger { margin-left: auto; background: var(--panel-soft); border: 1px solid var(--border); border-radius: 6px; height: 37px; padding: 0 12px; display: flex; align-items: center; gap: 9px; font-size: 10px; color: var(--muted); }
 .settings-trigger > span { margin-left: 8px; font-size: 17px; color: var(--accent); }
 .settings-trigger:hover, .settings-trigger.is-active { border-color: var(--border-strong); color: var(--text); }
-.settings-panel { margin-top: 8px; border: 1px solid var(--border); border-radius: 7px; background: var(--panel); backdrop-filter: blur(16px); padding: 9px 14px; }
+.settings-panel { position: absolute; top: calc(100% + 8px); right: 0; width: 205px; border: 1px solid var(--border); border-radius: 7px; background: var(--panel); backdrop-filter: blur(16px); padding: 9px 14px; }
 .setting-row { display: flex; align-items: center; justify-content: space-between; width: 100%; border: 0; background: transparent; font-size: 11px; height: 39px; padding: 0; color: var(--text); }
 .switch { display: inline-flex; align-items: center; width: 27px; height: 15px; border: 1px solid var(--border-strong); border-radius: 10px; background: #35383f; padding: 2px; }
 .switch > span { width: 9px; height: 9px; background: var(--subtle); border-radius: 50%; transition: transform .18s; }
@@ -127,32 +115,37 @@ a { color: inherit; text-decoration: none; }
 .notice button { border: 0; display: flex; padding: 0; background: none; color: var(--accent); }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-@media (min-width: 1700px) {
-  .enchant-panel { left: 5%; }
+@media (min-width: 768px) {
+  .camera-tools { display: flex; }
+  .enchant-controls { width: 256px; }
+  .enchant-button { display: flex; padding: 9px 18px; text-align: left; }
+  .enchant-button-copy { align-items: stretch; }
+  .enchant-button-title { font-size: 14px; }
 }
 
 @media (max-width: 1100px) {
-  .enchant-panel { left: 28px; top: 29%; width: 244px; padding: 15px; }
+  .enchant-controls { left: 28px; }
   .scene-footer { left: 28px; right: 28px; }
   .camera-hints, .scene-metrics { min-width: auto; font-size: 8px; }
   .animation-button { padding: 11px 13px; gap: 8px; }
   .topbar { padding: 25px 28px; }
-  .scene-edition { display: none; }
-  .scene-settings { right: 28px; }
   .camera-tools { right: 22px; }
+}
+
+@media (max-width: 767px) {
+  .enchant-controls { left: 50%; right: auto; top: auto; bottom: 116px; width: min(300px, calc(100% - 40px)); transform: translateX(-50%); }
 }
 
 @media (max-width: 700px) {
   .atelier { min-height: 540px; }
-  .topbar { padding: 20px; }
+  .topbar { padding: 20px; gap: 12px; }
+  .brand { gap: 9px; }
   .brand-mark { width: 38px; height: 38px; }
   .brand-mark svg { width: 24px; }
-  .brand-title { font-size: 13px; letter-spacing: 1.8px; }
-  .brand-subtitle { font-size: 6px; letter-spacing: 2.2px; margin-top: 6px; }
-  .renderer-state { font-size: 8px; }
-  .scene-settings { top: 83px; right: 20px; }
+  .brand-title { font-size: 12px; letter-spacing: 1.4px; }
+  .brand-subtitle { font-size: 6px; letter-spacing: 2px; margin-top: 6px; }
   .settings-trigger { font-size: 9px; height: 32px; }
-  .camera-tools { right: 16px; top: 38%; padding: 3px; }
+  .camera-tools { right: 16px; top: 38%; transform: none; padding: 3px; }
   .tool-button { width: 32px; height: 36px; }
   .tool-button svg { width: 17px; }
   .scene-footer { left: 20px; right: 20px; bottom: 23px; justify-content: center; }
@@ -162,22 +155,7 @@ a { color: inherit; text-decoration: none; }
   .pause-button { width: 34px; }
   .camera-hints, .scene-metrics { display: none; }
   .scene-message { top: 43%; width: min(330px, calc(100% - 70px)); }
-  .enchant-panel { display: grid; grid-template-columns: 1fr auto; column-gap: 14px; row-gap: 6px; left: 20px; right: 20px; top: auto; bottom: 116px; width: auto; padding: 13px; }
-  .enchant-summary { grid-column: 1; grid-row: 1; gap: 7px; justify-content: start; }
-  .enchant-heading > span { font-size: 7px; letter-spacing: .7px; }
-  .enchant-heading h1 { margin-top: 4px; font-size: 15px; }
-  .enchant-counter { font-size: 25px; min-width: 35px; }
-  .enchant-hint { grid-column: 1; grid-row: 2; margin: 0; min-height: 28px; font-size: 8px; }
-  .enchant-chance { grid-column: 1 / 3; grid-row: 3; font-size: 9px; }
-  .enchant-operation { grid-column: 1 / 3; grid-row: 4; margin: 3px 0 0; }
-  .enchant-operation-status { min-height: 30px; margin-bottom: 6px; font-size: 9px; }
-  .enchant-actions { grid-column: 2; grid-row: 1 / 3; align-self: center; gap: 6px; }
-  .enchant-increase { padding: 0 8px; font-size: 10px; }
-  .enchant-increase > svg { width: 13px; }
-  .enchant-reset { width: 32px; }
-  .enchant-source { display: none; }
-  .enchant-panel.has-error .enchant-hint { grid-column: 1 / 3; grid-row: 2; }
-  .enchant-panel.has-error .enchant-actions { grid-row: 1; }
+  .enchant-button { padding: 8px 15px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
